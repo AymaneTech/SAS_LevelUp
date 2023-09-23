@@ -22,8 +22,7 @@ typedef struct
 // Global variables
 task list[50];
 int total = 0, checker = 0;
-int choice, id,  statusNum;
-
+int choice, id, statusNum;
 
 // Add task
 void addTask()
@@ -83,16 +82,31 @@ void addMultipleTask()
 // Display all tasks
 void displayTasks()
 {
+    if (total != 0)
+    {
+        printf("+----+-------------------------+-------------------------------+------------------+----------------------+\n");
+        printf("| ID |       Title             |          Description          |  Deadline        |        Status        |\n");
+        printf("+----+-------------------------+-------------------------------+------------------+----------------------+\n");
 
+        for (int i = 0; i < total; i++)
+        {
+            printf("| %-2d | %-23s | %-29s | %04d-%02d-%02d\t  | %-21s|\n", list[i].id, list[i].title, list[i].description, list[i].deadline.year, list[i].deadline.month, list[i].deadline.day, list[i].status);
+            printf("+----+-------------------------+-------------------------------+------------------+----------------------+\n");
+        }
+    }
+    else
+    {
+        printf("\t\t\t *** tasks table is empty *** \n");
+    }
+}
+void displayOneTask()
+{
+    int i;
     printf("+----+-------------------------+-------------------------------+------------------+----------------------+\n");
     printf("| ID |       Title             |          Description          |  Deadline        |        Status        |\n");
     printf("+----+-------------------------+-------------------------------+------------------+----------------------+\n");
-
-    for (int i = 0; i < total; i++)
-    {
-        printf("| %-2d | %-23s | %-29s | %04d-%02d-%02d\t  | %-21s|\n", list[i].id, list[i].title, list[i].description, list[i].deadline.year, list[i].deadline.month, list[i].deadline.day, list[i].status);
-        printf("+----+-------------------------+-------------------------------+------------------+----------------------+\n");
-    }
+    printf("| %-2d | %-23s | %-29s | %04d-%02d-%02d\t  | %-21s|\n", list[i].id, list[i].title, list[i].description, list[i].deadline.year, list[i].deadline.month, list[i].deadline.day, list[i].status);
+    printf("+----+-------------------------+-------------------------------+------------------+----------------------+\n");
 }
 // swap
 void swap()
@@ -117,7 +131,7 @@ void sortByAlphabeticall()
             }
         }
     }
-    for
+    displayOneTask();
 }
 // i have to create the deadline sorting function
 // Searching ID / title
@@ -129,12 +143,12 @@ void searchingByID()
 
     for (int i = 0; i < total; i++)
     {
-        if (id == list[total].id)
+        if (id == list[i].id)
         {
 
             checker = 1;
             printf("\t\t\tThe task exist \n");
-            displayTasks();
+            displayOneTask();
         }
         else
         {
@@ -161,7 +175,7 @@ void searchingByTitle()
         {
             checker = 1;
             printf("This Task exists on ID : %d", i + 1);
-            displayTasks();
+            displayOneTask();
         }
         else
         {
@@ -225,22 +239,23 @@ void ModifyTask()
             }
         }
     }
-    if (checker == 0){
+    if (checker == 0)
+    {
         printf("ID Doesn't exist !!! \n");
     }
 }
 // Delete Task
-void deleteByID (){
+void deleteByID()
+{
     printf("\t\t\t *** Delete a task *** \n");
     searchingByID();
     printf("%d", list[total].id);
-
 }
 
 int main()
 {
     printf("%d", total);
-     do
+    do
     {
         printf("\n**********************************\n");
         printf("*      Task Manager Menu         *\n");
@@ -296,15 +311,15 @@ int main()
             break;
         case 9:
             printf("\e[1;1H\e[2J");
-            //delete_task();
+            // delete_task();
             break;
         case 10:
             printf("\e[1;1H\e[2J");
-            //updating_task();
+            // updating_task();
             break;
         case 11:
             printf("\e[1;1H\e[2J");
-            //displayStatistic();
+            // displayStatistic();
             break;
         case 0:
             break;
@@ -313,7 +328,6 @@ int main()
             break;
         }
     } while (choice != 0);
-
 
     return 0;
 }
